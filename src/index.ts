@@ -8,6 +8,13 @@ const app = express();
 //Configure the dotenv package so that we can use env variables accross the app
 dotenv.config();
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
+
 //Sample request
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Dog");
