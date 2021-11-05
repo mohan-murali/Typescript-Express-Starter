@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
-import { errorHander, routeNotFoundHander } from "./middleware";
 import * as dotenv from "dotenv";
+import bodyParser from "body-parser";
+import { errorHander, routeNotFoundHander } from "./middleware";
+import { router } from "./routes";
 
 //Create the epress app
 const app = express();
@@ -8,10 +10,8 @@ const app = express();
 //Configure the dotenv package so that we can use env variables accross the app
 dotenv.config();
 
-//Sample request
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello Dog");
-});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(router);
 
 //register middlewares to handle server side errors.
 app.use(errorHander);
