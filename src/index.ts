@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cookieSession from "cookie-session";
 import { errorHander, routeNotFoundHander } from "./middleware";
 import { router } from "./routes";
 
@@ -11,6 +12,7 @@ const app = express();
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({ keys: ["laskdjf"] }));
 app.use(router);
 
 //register middlewares to handle server side errors.
