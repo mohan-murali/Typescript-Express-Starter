@@ -31,8 +31,8 @@ const swaggerDefinition: SwaggerDefinition = {
 };
 
 const options: Options = {
-  swaggerDefinition,
-  apis: ["./routes/loginRoutes.js"],
+  definition: swaggerDefinition,
+  apis: [__dirname + "/routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

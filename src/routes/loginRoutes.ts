@@ -15,13 +15,6 @@ interface RequestWithBody extends Request {
   body: { [key: string]: string | undefined };
 }
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Retrieve a list of JSONPlaceholder users
- *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
- */
 router.get("/", (req: Request, res: Response) => {
   if (req.session?.loggedIn) {
     res.send("you are logged In");
@@ -75,6 +68,42 @@ router.get("/signUp", (req: Request, res: Response) => {
   `);
 });
 
+/**
+ * @swagger
+ * /signUp:
+ *  post:
+ *    summary: allow users to create new login
+ *    requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The users name
+ *                 example : Fizz buzz
+ *               email:
+ *                 type: string
+ *                 description: The user's email.
+ *                 example: fizzbuzz@mail.com
+ *               password:
+ *                 type: string
+ *                 description: the user's password
+ *    responses:
+ *      200:
+ *        description: Ok
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                success:
+ *                  type: boolean
+ *                message:
+ *                  type: string
+ */
 router.post("/signUp", async (req: RequestWithBody, res: Response) => {
   try {
     const { name, email, password } = req.body;
@@ -122,6 +151,20 @@ router.post("/signUp", async (req: RequestWithBody, res: Response) => {
  * /login:
  *  post:
  *    summary: Validate and login user
+ *    requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's email.
+ *                 example: fizzbuzz@mail.com
+ *               password:
+ *                 type: string
+ *                 description: the user's password
  *    responses:
  *      200:
  *        description: Ok
@@ -139,6 +182,10 @@ router.post("/signUp", async (req: RequestWithBody, res: Response) => {
  *                  properties:
  *                    id:
  *                     type: integer
+ *                    name:
+ *                      type: string
+ *                    email:
+ *                      type: string
  */
 router.post("/login", async (req: RequestWithBody, res: Response) => {
   try {
