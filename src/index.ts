@@ -4,12 +4,16 @@ import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 import { errorHander, routeNotFoundHander } from "./middleware";
 import { router } from "./routes";
+import { connectDB } from "./config";
 
 //Create the epress app
 const app = express();
 
 //Configure the dotenv package so that we can use env variables accross the app
 dotenv.config();
+
+//connect mongo DB
+connectDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({ keys: ["laskdjf"] }));

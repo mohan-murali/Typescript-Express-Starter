@@ -5,3 +5,6 @@
 
 #build
 /build
+
+#environment variables
+.env
