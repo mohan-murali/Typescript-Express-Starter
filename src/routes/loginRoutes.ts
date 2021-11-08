@@ -3,9 +3,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { authHandler } from "../middleware/authHandler";
 import { User, UserModel } from "../models/user";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const router = Router();
 const JWT_KEY = process.env.JWT_KEY || "";
+console.log("the jwt secret is", JWT_KEY);
 
 interface RequestWithBody extends Request {
   body: { [key: string]: string | undefined };
@@ -146,6 +150,7 @@ router.post("/login", async (req: RequestWithBody, res: Response) => {
         message: "You need to send email and password",
       });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "cannot retrieve user",
