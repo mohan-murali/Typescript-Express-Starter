@@ -15,6 +15,13 @@ interface RequestWithBody extends Request {
   body: { [key: string]: string | undefined };
 }
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Retrieve a list of JSONPlaceholder users
+ *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
+ */
 router.get("/", (req: Request, res: Response) => {
   if (req.session?.loggedIn) {
     res.send("you are logged In");
@@ -110,6 +117,29 @@ router.post("/signUp", async (req: RequestWithBody, res: Response) => {
   }
 });
 
+/**
+ * @swagger
+ * /login:
+ *  post:
+ *    summary: Validate and login user
+ *    responses:
+ *      200:
+ *        description: Ok
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                success:
+ *                  type: boolean
+ *                token:
+ *                  type: string
+ *                user:
+ *                  type: object
+ *                  properties:
+ *                    id:
+ *                     type: integer
+ */
 router.post("/login", async (req: RequestWithBody, res: Response) => {
   try {
     const { email, password } = req.body;
