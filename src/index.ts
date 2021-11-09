@@ -2,6 +2,8 @@ import express from "express";
 import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
+import swaggerJSDoc, { Options, SwaggerDefinition } from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import { errorHander, routeNotFoundHander } from "./middleware";
 import { router } from "./routes";
 import { connectDB } from "./config";
@@ -18,6 +20,24 @@ connectDB();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({ keys: ["laskdjf"] }));
 app.use(router);
+
+//configure swagger
+const swaggerDefinition: SwaggerDefinition = {
+  openapi: "3.0.0",
+  info: {
+    title: "Express API with Typescript",
+    version: "1.0.0",
+  },
+};
+
+const options: Options = {
+  definition: swaggerDefinition,
+  apis: [__dirname + "/routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //register middlewares to handle server side errors.
 app.use(errorHander);
