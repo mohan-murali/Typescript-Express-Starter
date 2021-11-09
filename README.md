@@ -6,6 +6,7 @@ Basic configuration for express app with typescript. This app has following buil
 - authentication support and middleware
 - has a default error handling middleware
 - has a default no route found middleware
+- can generate swagger UI using swagger js docs.
 
 The App currently has the following scripts pre-configured
 
